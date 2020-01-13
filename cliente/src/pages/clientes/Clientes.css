@@ -1,0 +1,13 @@
+img:hover {
+    opacity: 30%;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    margin-right: 15px;
+}
