@@ -13,7 +13,6 @@ import './Clientes.css';
 export default function Clientes({history}) {
     const [data, setData] = useState([]);
     const [authority, setAuthority] = useState('');
-    const [hide, setHide] = useState('');
     const [selectedRow, setSelectedRow] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const [isCrudModalOpen, setIsCrudModalOpen] = useState(false);
@@ -32,18 +31,8 @@ export default function Clientes({history}) {
         loadClientes();
     }, []);
 
-    useEffect(() => {
-        async function montarTela() {
-            if(authority === "ROLE_USER"){
-                setHide("lg");
-            } else {
-                setHide("sm");
-            }
-        }
-        montarTela();
-    }, [authority]);
-
     function sair() {
+        console.log('sair');
         logout();
         history.push(`/`);
     }
@@ -55,29 +44,6 @@ export default function Clientes({history}) {
     }
 
     const handleInsertClick = () => {
-        setSelectedRow({
-            id: 0,
-            nome: '',
-            cpf: '',
-            endereco: {
-                cep: '',
-                logradouro: '',
-                bairro: '',
-                cidade: '',
-                uf: '',
-                complemento: ''
-            },
-            telefones: [{
-                tipo: {
-                    id: 0,
-                    descricao: ''
-                },
-                numero: ''
-            }],
-            emails: [{
-                endereco: ''
-            }]
-        });
         setIsCrudModalOpen(true);
     }
 
@@ -124,33 +90,31 @@ export default function Clientes({history}) {
         },
         {
             cell: row =>
-            <div>
-            {authority === "ROLE_ADMIN" &&
-                <button onClick={() => handleEditClick(row)}>
-                    <img src={editButton} alt="Caneta" />
-                </button>
-            }
-		    </div>,
+                <div>
+                    {authority === "ROLE_ADMIN" &&
+                    <button onClick={() => handleEditClick(row)}>
+                        <img src={editButton} alt="Caneta" />
+                    </button>
+                    }
+                </div>,
             allowOverflow: true,
             ignoreRowClick: true,
-            button: true,
-            hide: hide
+            button: true
         },
         {
             cell: row =>
-            <div>
-            {authority === "ROLE_ADMIN" &&
-                <button onClick={() => handleDeleteClick(row)}>
-                    <img src={deleteButton} alt="Lixeira" />
-                </button>
-            }
-		    </div>,
+                <div>
+                    {authority === "ROLE_ADMIN" &&
+                    <button onClick={() => handleDeleteClick(row)}>
+                        <img src={deleteButton} alt="Lixeira" />
+                    </button>
+                    }
+                </div>,
             allowOverflow: true,
             ignoreRowClick: true,
-            button: true,
-            hide: hide
+            button: true
         }
-    ], [hide]);
+    ], [authority]);
 
     const TableTheme = {
         highlightOnHover: true,
@@ -190,10 +154,10 @@ export default function Clientes({history}) {
                 />
             </div>
             {authority === "ROLE_ADMIN" &&
-                <div>
-                    <Button className="ui right floated button" style={{marginRight:'20px'}} onClick={handleInsertClick}>CADASTRAR NOVO CLIENTE</Button>
-                    <CrudModal isOpen={isCrudModalOpen} onClose={() => setIsCrudModalOpen(false)} data={selectedRow} operacao={operacao}/>
-                </div>
+            <div>
+                <Button className="ui right floated button" style={{marginRight:'20px'}} onClick={handleInsertClick}>CADASTRAR NOVO CLIENTE</Button>
+                <CrudModal isOpen={isCrudModalOpen} onClose={() => setIsCrudModalOpen(false)} data={selectedRow} operacao={operacao}/>
+            </div>
             }
         </div>
     );
