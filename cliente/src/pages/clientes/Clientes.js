@@ -124,9 +124,13 @@ export default function Clientes({history}) {
         },
         {
             cell: row =>
+            <div>
+            {authority === "ROLE_ADMIN" &&
                 <button onClick={() => handleEditClick(row)}>
                     <img src={editButton} alt="Caneta" />
-                </button>,
+                </button>
+            }
+		    </div>,
             allowOverflow: true,
             ignoreRowClick: true,
             button: true,
@@ -134,9 +138,13 @@ export default function Clientes({history}) {
         },
         {
             cell: row =>
+            <div>
+            {authority === "ROLE_ADMIN" &&
                 <button onClick={() => handleDeleteClick(row)}>
                     <img src={deleteButton} alt="Lixeira" />
-                </button>,
+                </button>
+            }
+		    </div>,
             allowOverflow: true,
             ignoreRowClick: true,
             button: true,
